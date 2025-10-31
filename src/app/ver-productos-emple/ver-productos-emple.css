@@ -1,0 +1,285 @@
+.container {
+  background-color: #ffffff; 
+  padding: 20px;
+  max-width: 1200px;
+  border-radius: 10px;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #000000ff; /* --black */
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  padding: 10px;
+  border: 1px solid #8da7beff; /* --cadet-gray */
+  border-radius: 5px;
+  width: 300px;
+}
+
+.search-bar button, .add-button {
+  padding: 10px 20px;
+  background-color: #941c2fff; /* --burgundy */
+  color: #ffffff; /* --white */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-bar button:hover, .add-button:hover {
+  background-color: #d12e4a; /* Oscuro de burgundy */
+}
+
+.add-button i {
+  margin-right: 5px;
+}
+
+/* Tabla de Productos - Responsiva */
+.tabla-productos {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 20px;
+}
+
+#tabla-productos {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Aumenté el mínimo por las columnas extra */
+}
+
+#tabla-productos th, #tabla-productos td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+}
+
+#tabla-productos th {
+    background-color: #941c2fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+#tabla-productos tr:hover {
+    background-color: rgba(148, 28, 47, 0.1); /* Usé tu color burgundy */
+}
+
+.status-available {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Scrollbar personalizado para la tabla */
+.tabla-productos::-webkit-scrollbar {
+    height: 8px;
+}
+
+.tabla-productos::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.tabla-productos::-webkit-scrollbar-thumb {
+    background: #941c2fff; /* Tu color burgundy */
+    border-radius: 4px;
+}
+
+.tabla-productos::-webkit-scrollbar-thumb:hover {
+    background: #7a1626; /* Oscuro de burgundy */
+}
+
+/* Responsivo para tablets y móviles */
+@media (max-width: 768px) {
+    .tabla-productos {
+        font-size: 14px;
+    }
+    
+    #tabla-productos {
+        min-width: 700px;
+    }
+    
+    #tabla-productos th, #tabla-productos td {
+        padding: 8px 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tabla-productos {
+        font-size: 12px;
+    }
+    
+    #tabla-productos {
+        min-width: 600px;
+    }
+    
+    #tabla-productos th, #tabla-productos td {
+        padding: 6px 4px;
+        font-size: 12px;
+    }
+    
+    .search-bar {
+        flex-direction: column;
+    }
+    
+    .search-bar input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+/* Estilos del footer */
+footer {
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 60px;
+}
+
+footer p {
+    margin: 0;
+}
+
+.social-links {
+    margin-top: 10px;
+}
+
+.social-links a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #f0f0f0;
+}
+
+/* Botón para abrir/cerrar el menú */
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 10px;
+    font-size: 24px;
+    color: #000; /* Texto negro para contrastar con fondo blanco */
+    cursor: pointer;
+    z-index: 1001;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Menú lateral */
+.menu-lateral {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    padding: 20px;
+    box-shadow: none; /* Línea modificada */
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+.menu-lateral.active {
+    left: 0;
+}
+
+.menu-header h2 {
+    color: #000; /* Texto negro */
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.menu-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-items li {
+    margin-bottom: 15px;
+}
+
+.menu-items li a {
+    color: #000; /* Texto negro */
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-items li a:hover {
+    background-color: #7a96b0;  /* Fondo claro al hover */
+    transition: all 0.3s ease;
+  }
+
+.menu-items li a i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+/* Ocultar el submenú inicialmente */
+.submenu {
+    display: none;
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+/* Mostrar el submenú cuando tenga la clase 'active' */
+.submenu.active {
+    display: block;
+}
+
+/* Header */
+header {
+    color: #000; /* Texto negro */
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .titulo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    margin-left: 20px; /* Línea añadida */
+}
+
+/* Contenido principal */
+.contenido-principal {
+    margin-left: 0;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+.menu-lateral.active ~ .contenido-principal {
+    margin-left: 250px; /* Desplazamiento cuando el menú está abierto */
+}
