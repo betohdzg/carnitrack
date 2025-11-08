@@ -14,15 +14,20 @@ import { AuthService } from '../auth'; // Asegúrate de importar el servicio de 
 export class VerProductosGerenComponent {
   menuActive: boolean = false;
   submenuActive: boolean = false;
+  isGerente: boolean = false;
+  rows: any[] = [
+    { id: 1, tipo: 'Res', nombre: 'Filete', venta: 'Sí', precio: '$12.50', stock: '100 kg', estado: 'Disponible', entrada: '15 Oct 2025', caducidad: '15 Nov 2025' },
+    { id: 2, tipo: 'Cerdo', nombre: 'Costilla', venta: 'Sí', precio: '$9.75', stock: '80 kg', estado: 'Disponible', entrada: '10 Oct 2025', caducidad: '10 Nov 2025' },
+  ];
+  filteredRows: any[] = [];
   searchQuery: string = '';
-  filteredRows: any[] = []; // Ajusta según tus datos (puedes simular datos aquí si quieres)
 
   constructor(private router: Router, private authService: AuthService) {
-    // Simulación de datos (reemplaza con tu servicio cuando haya backend)
-    this.filteredRows = [
-      { id: 1, tipo: 'Res', nombre: 'Carne Molida', venta: '1 kg', precio: '$50.00', stock: 10, estado: 'Disponible', entrada: '2025-10-01', caducidad: '2025-11-01' },
-      { id: 2, tipo: 'Pollo', nombre: 'Pechuga', venta: '0.5 kg', precio: '$30.00', stock: 5, estado: 'Disponible', entrada: '2025-10-02', caducidad: '2025-10-31' },
-    ];
+    this.isGerente = this.authService.isGerente();
+  }
+
+  ngOnInit() {
+    this.filteredRows = [...this.rows];
   }
 
   toggleMenu() {
@@ -33,10 +38,22 @@ export class VerProductosGerenComponent {
     this.submenuActive = !this.submenuActive;
   }
 
-  filterTable() {
-    // Lógica de filtrado (a implementar cuando haya backend)
-    // Por ahora, no hace nada
+  logout() {
+    this.authService.logout();
+    alert('Cerrando sesión...');
+    this.router.navigate(['/login']);
   }
+
+  filterTable() {
+    const filter = this.searchQuery.toLowerCase();
+    this.filteredRows = this.rows.filter(row =>
+      Object.values(row).some(value => {
+        if (value === null || value === undefined) return false;
+        return value.toString().toLowerCase().includes(filter);
+      })
+    );
+  }
+
 
   agregarProducto() {
     // Lógica para agregar producto (a implementar)
@@ -52,9 +69,5 @@ export class VerProductosGerenComponent {
     alert(`Borrar producto con ID: ${id}`);
   }
 
-  logout() {
-    this.authService.logout();
-    alert('Cerrando sesión...');
-    this.router.navigate(['/login']);
-  }
+
 }

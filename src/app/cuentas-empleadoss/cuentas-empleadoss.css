@@ -20,7 +20,7 @@ h2 {
     font-weight: 600;
 }
 
-/* Barra de búsqueda y botón */
+/* Barra de búsqueda */
 .search-bar {
     display: flex;
     flex-wrap: wrap;
@@ -34,9 +34,8 @@ h2 {
     border: 2px solid #941c2fff;
     border-radius: 8px;
     font-size: 16px;
-    min-width: 280px;
+    min-width: 250px;
     transition: all 0.3s ease;
-    background-color: white;
 }
 
 .search-bar input:focus {
@@ -45,8 +44,7 @@ h2 {
     box-shadow: 0 0 0 3px rgba(209, 46, 74, 0.2);
 }
 
-.search-bar button,
-.add-button {
+.search-bar button {
     padding: 12px 24px;
     background-color: #941c2fff;
     color: white;
@@ -58,90 +56,64 @@ h2 {
     align-items: center;
     gap: 8px;
     transition: background-color 0.3s ease;
-    font-weight: 500;
 }
 
-.search-bar button:hover,
-.add-button:hover {
+.search-bar button:hover {
     background-color: #d12e4a;
 }
 
-/* Íconos en botones */
-.search-bar button i,
-.add-button i {
-    font-size: 18px;
-}
-
-/* Tabla de Productos - Responsiva */
-.tabla-productos {
+/* Contenedor de la tabla con scroll horizontal */
+.tabla-empleados {
     overflow-x: auto;
-    width: 100%;
     -webkit-overflow-scrolling: touch;
-    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 10px;
 }
 
-#tabla-productos {
+/* Tabla */
+table {
     width: 100%;
+    min-width: 800px; /* Necesario para scroll horizontal */
     border-collapse: collapse;
-    min-width: 900px; /* Aumentado para incluir la nueva columna */
+    background-color: white;
 }
 
-#tabla-productos th,
-#tabla-productos td {
-    padding: 12px;
+th {
+    background-color: #941c2fff;
+    color: white;
+    padding: 14px 12px;
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    font-weight: 600;
+    font-size: 15px;
     white-space: nowrap;
 }
 
-#tabla-productos th {
-    background-color: #941c2fff;
-    color: #fff;
-    font-weight: 600;
-}
-
-#tabla-productos tr:hover {
-    background-color: rgba(148, 28, 47, 0.1);
-}
-
-.status-available {
-    color: #28a745;
-    font-weight: bold;
-}
-
-/* Scrollbar personalizado para la tabla */
-.tabla-productos::-webkit-scrollbar {
-    height: 8px;
-}
-
-.tabla-productos::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
-
-.tabla-productos::-webkit-scrollbar-thumb {
-    background: #941c2fff;
-    border-radius: 4px;
-}
-
-.tabla-productos::-webkit-scrollbar-thumb:hover {
-    background: #7a1626;
-}
-
-/* Botones de acción (Editar y Borrar) */
-.action-button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 0 5px;
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
     font-size: 14px;
-    transition: background-color 0.3s;
+}
+
+tr:hover {
+    background-color: rgba(148, 28, 47, 0.08);
+}
+
+/* Botones de acción */
+.action-button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    margin: 0 3px;
 }
 
 .edit-button {
-    background-color: #28a745; /* Verde para editar */
-    color: #fff;
+    background-color: #28a745;
+    color: white;
 }
 
 .edit-button:hover {
@@ -149,66 +121,84 @@ h2 {
 }
 
 .delete-button {
-    background-color: #dc3545; /* Rojo para borrar */
-    color: #fff;
+    background-color: #dc3545;
+    color: white;
 }
 
 .delete-button:hover {
     background-color: #c82333;
 }
 
-.action-button i {
-    margin-right: 5px;
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .search-bar {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .search-bar input {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    .search-bar button {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
-/* Responsivo para tablets y móviles */
 @media (max-width: 768px) {
-    .tabla-productos {
-        font-size: 14px;
+    h2 {
+        font-size: 24px;
     }
-
-    #tabla-productos {
-        min-width: 800px;
+    
+    table {
+        min-width: 700px;
     }
-
-    #tabla-productos th,
-    #tabla-productos td {
-        padding: 8px 6px;
+    
+    th, td {
+        padding: 10px 8px;
+        font-size: 13px;
     }
-
+    
     .action-button {
-        padding: 4px 8px;
+        padding: 5px 8px;
         font-size: 12px;
     }
 }
 
 @media (max-width: 480px) {
-    .tabla-productos {
+    .container {
+        padding: 15px;
+        margin: 10px auto;
+    }
+    
+    h2 {
+        font-size: 22px;
+    }
+    
+    .search-bar input,
+    .search-bar button {
+        font-size: 14px;
+    }
+    
+    table {
+        min-width: 600px;
+    }
+    
+    th, td {
+        padding: 8px 6px;
         font-size: 12px;
     }
-
-    #tabla-productos {
-        min-width: 700px;
-    }
-
-    #tabla-productos th,
-    #tabla-productos td {
-        padding: 6px 4px;
-        font-size: 12px;
-    }
-
-    .search-bar {
-        flex-direction: column;
-    }
-
-    .search-bar input {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
+    
     .action-button {
-        padding: 3px 6px;
-        font-size: 10px;
+        padding: 4px 6px;
+        font-size: 11px;
     }
 }
 

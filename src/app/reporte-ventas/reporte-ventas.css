@@ -100,11 +100,7 @@ table tr:hover {
     background-color: rgba(70, 130, 180, 0.1);
 }
 
-.tabla-reportes tbody tr td {
-    padding: 20px;
-    font-style: italic;
-    color: #666;
-}
+
 
 /* Estilos para el modal de advertencia */
 .modal {

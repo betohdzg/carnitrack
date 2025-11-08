@@ -46,41 +46,48 @@
             <h1>CarneTrack</h1>
         </div>
     </header>
-    <section class="formulario-producto">
-        <div class="container">
-            <h2>Salida de Producto</h2>
-            <form>
-                <!-- Campo: Buscar Producto -->
-                <div class="form-group buscar_producto">
-                    <label for="buscar_producto">Ingresa el ID o nombre del producto:</label>
-                    <input type="text" id="buscar_producto" placeholder="Ej: Res o 123">
-                </div>
-
-                <!-- Campo: Cantidad (en kilos) -->
-                <div class="form-group cantidad">
-                    <label for="cantidad">Cantidad (kg):</label>
-                    <input type="number" id="cantidad" min="0.1" step="0.1" required>
-                </div>
-
-                <!-- Campo: Precio Total -->
-                <div class="form-group precio_total">
-                    <label for="precio_total">Precio Total:</label>
-                    <input type="text" id="precio_total" readonly>
-                </div>
-
-                <!-- Botón de Confirmar Venta -->
-                <button type="button" class="cta-button">Confirmar Venta</button>
-            </form>
+  <main class="main-content">
+    <section class="formulario-mi-cuenta">
+      <h2>Mi Cuenta</h2>
+      
+      <form>
+        <!-- Nombre -->
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input 
+            type="text" 
+            id="nombre" 
+            [value]="user.nombre" 
+            readonly>
         </div>
+
+        <!-- Correo -->
+        <div class="form-group">
+          <label for="correo">Correo</label>
+          <input 
+            type="email" 
+            id="correo" 
+            [value]="user.correo" 
+            readonly>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="form-group">
+          <label for="contrasena">Contraseña</label>
+          <div class="password-container">
+            <input 
+              [type]="showPassword ? 'text' : 'password'"
+              id="contrasena"
+              [value]="user.contrasena"
+              readonly>
+            <i 
+              class="fas" 
+              [class.fa-eye]="!showPassword"
+              [class.fa-eye-slash]="showPassword"
+              (click)="togglePassword()">
+            </i>
+          </div>
+        </div>
+      </form>
     </section>
- <footer>
-        <div class="container">
-            <p>&copy; 2025/6 CarneTrack. Todos los derechos reservados.</p>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-    </footer>
-</main>
+  </main>
