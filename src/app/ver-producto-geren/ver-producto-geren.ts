@@ -13,7 +13,8 @@ import { AuthService } from '../auth'; // Asegúrate de importar el servicio de 
 })
 export class VerProductosGerenComponent {
   menuActive: boolean = false;
-  submenuActive: boolean = false;
+  movimientosActive: boolean = false;
+  nominaActive: boolean = false; 
   isGerente: boolean = false;
   rows: any[] = [
     { id: 1, tipo: 'Res', nombre: 'Filete', venta: 'Sí', precio: '$12.50', stock: '100 kg', estado: 'Disponible', entrada: '15 Oct 2025', caducidad: '15 Nov 2025' },
@@ -34,8 +35,16 @@ export class VerProductosGerenComponent {
     this.menuActive = !this.menuActive;
   }
 
-  toggleSubmenu() {
-    this.submenuActive = !this.submenuActive;
+  toggleMovimientos() {
+    this.movimientosActive = !this.movimientosActive;
+    // Opcional: cerrar el otro
+    this.nominaActive = false;
+  }
+
+  toggleNomina() {
+    this.nominaActive = !this.nominaActive;
+    // Opcional: cerrar el otro
+    this.movimientosActive = false;
   }
 
   logout() {

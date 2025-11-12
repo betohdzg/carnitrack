@@ -12,7 +12,8 @@ import { AuthService } from '../auth';
 })
 export class DashboardComponent {
   menuActive: boolean = false;
-  submenuActive: boolean = false;
+  movimientosActive: boolean = false;
+  nominaActive: boolean = false; 
   isGerente: boolean = false;
   productos: any[] = []; // Ajusta según tu servicio de datos
 
@@ -30,8 +31,16 @@ export class DashboardComponent {
     this.menuActive = !this.menuActive;
   }
 
-  toggleSubmenu() {
-    this.submenuActive = !this.submenuActive;
+  toggleMovimientos() {
+    this.movimientosActive = !this.movimientosActive;
+    // Opcional: cerrar el otro
+    this.nominaActive = false;
+  }
+
+  toggleNomina() {
+    this.nominaActive = !this.nominaActive;
+    // Opcional: cerrar el otro
+    this.movimientosActive = false;
   }
 
   logout() {

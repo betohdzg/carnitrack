@@ -6,18 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo');           // Res, Cerdo, etc.
-            $table->string('nombre');         // Filete, Costilla, etc.
-            $table->decimal('venta_kg', 8, 2); // ¿Se vende por kg?
-            $table->decimal('precio', 8, 2);  // Precio
+            $table->string('nombre');
+            $table->enum('tipo_carne', ['res', 'pollo', 'pescado']);
+            $table->decimal('precio_kg', 8, 2);
+            $table->decimal('stock_kg', 8, 2);
+            $table->date('fecha_entrada');
+            $table->date('fecha_caducidad');
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('productos');

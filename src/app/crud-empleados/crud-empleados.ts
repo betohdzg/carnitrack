@@ -3,32 +3,31 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../auth';
-import { ProductoService } from '../services/producto';
 
 @Component({
-  selector: 'app-entrada',
+  selector: 'app-crud-empleados',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  templateUrl: './entrada-productos.html',
-  styleUrls: ['./entrada-productos.css']
+  templateUrl: './crud-empleados.html',
+  styleUrls: ['./crud-empleados.css']
 })
-export class EntradaComponent implements AfterViewInit {
+export class CrudEmpleadosComponent implements AfterViewInit {
   menuActive = false;
   movimientosActive = false;
-  nominaActive = false; 
+  nominaActive = false;
   isGerente = false;
 
-  // Datos del formulario
-  producto: any = {
-    id_producto: '',
+  // Datos del empleado
+  empleado = {
     nombre: '',
-    tipo_carne: '',
-    precio_kg: 0,
-    stock_kg: 0,
-    fecha_entrada: '',
-    fecha_caducidad: ''
+    puesto: '',
+    salario_base: 0,
+    usuario: '',
+    password: '',
+    rol: 'empleado' as 'gerente' | 'empleado'
   };
 
+  // Referencias al modal
   @ViewChild('successModal') successModal!: ElementRef;
   @ViewChild('closeBtn') closeBtn!: ElementRef;
   @ViewChild('acceptButton') acceptButton!: ElementRef;
@@ -36,24 +35,29 @@ export class EntradaComponent implements AfterViewInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private productoService: ProductoService
+    
   ) {
     this.isGerente = this.authService.isGerente();
   }
 
   ngAfterViewInit() {
+    // Cerrar modal con X
     this.closeBtn.nativeElement.addEventListener('click', () => {
       this.successModal.nativeElement.style.display = 'none';
     });
+
+    // Cerrar modal con Aceptar
     this.acceptButton.nativeElement.addEventListener('click', () => {
       this.successModal.nativeElement.style.display = 'none';
     });
   }
 
+  // Menú
   toggleMenu() {
     this.menuActive = !this.menuActive;
   }
 
+// Submenús independientes
   toggleMovimientos() {
     this.movimientosActive = !this.movimientosActive;
     // Opcional: cerrar el otro
@@ -72,22 +76,31 @@ export class EntradaComponent implements AfterViewInit {
     this.router.navigate(['/login']);
   }
 
-  guardarProducto(event: Event) {
+  // Guardar empleado
+  guardarEmpleado(event: Event) {
     event.preventDefault();
 
-    if (!this.producto.id_producto || !this.producto.nombre || !this.producto.tipo_carne) {
-      alert('Completa los campos obligatorios');
+    // Validación básica
+    if (!this.empleado.nombre || !this.empleado.usuario || !this.empleado.password || !this.empleado.puesto) {
+      alert('Completa todos los campos obligatorios');
       return;
     }
 
-    this.productoService.guardarProducto(this.producto).subscribe({
-      next: () => {
+    if (this.empleado.password.length < 6) {
+      alert('La contraseña debe tener al menos 6 caracteres');
+      return;
+    }
+
+    // Enviar al backend (cuando lo tengas)
+    /*this.empleadoService.crearEmpleado(this.empleado).subscribe({
+      next: (res) => {
         this.mostrarModal();
         this.limpiarFormulario();
+        console.log('Empleado creado:', res);
       },
       error: (err) => {
-        console.error(err);
-        alert('Error al guardar');
+        console.error('Error al crear empleado:', err);
+        alert('Error al guardar el empleado. Revisa la consola.');
       }
     });
   }
@@ -97,14 +110,14 @@ export class EntradaComponent implements AfterViewInit {
   }
 
   limpiarFormulario() {
-    this.producto = {
-      id_producto: '',
+    this.empleado = {
       nombre: '',
-      tipo_carne: '',
-      precio_kg: 0,
-      stock: 0,
-      fecha_entrada: '',
-      fecha_caducidad: ''
+      puesto: '',
+      salario_base: 0,
+      usuario: '',
+      password: '',
+      rol: 'empleado'
     };
-  }
+  }*/
+}
 }

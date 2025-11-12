@@ -14,7 +14,8 @@ import { AuthService } from '../auth';
 })
 export class CuentasEmpleadosComponent  {
  menuActive: boolean = false;
-  submenuActive: boolean = false;
+  movimientosActive: boolean = false;
+  nominaActive: boolean = false;
   isGerente: boolean = false;
   rows: any[] = [
     { id_trb: 1, nom_trb: 'Juan Pérez', puesto: 'Cajero', sal_base: 8500.00, user_trb: 'juan123', psw_trb: 'pass123' },
@@ -35,8 +36,16 @@ export class CuentasEmpleadosComponent  {
     this.menuActive = !this.menuActive;
   }
 
-  toggleSubmenu() {
-    this.submenuActive = !this.submenuActive;
+  toggleMovimientos() {
+    this.movimientosActive = !this.movimientosActive;
+    // Opcional: cerrar el otro
+    this.nominaActive = false;
+  }
+
+  toggleNomina() {
+    this.nominaActive = !this.nominaActive;
+    // Opcional: cerrar el otro
+    this.movimientosActive = false;
   }
 
 
