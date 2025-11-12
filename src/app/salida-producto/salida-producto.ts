@@ -13,7 +13,8 @@ import { AuthService } from '../auth';
 })
 export class SalidaProductoComponent {
   menuActive: boolean = false;
-  submenuActive: boolean = false;
+  movimientosActive: boolean = false;
+  nominaActive: boolean = false;
   isGerente: boolean = false;
 
   constructor(private router: Router, private authService: AuthService) {
@@ -23,8 +24,16 @@ export class SalidaProductoComponent {
     this.menuActive = !this.menuActive;
   }
 
-  toggleSubmenu() {
-    this.submenuActive = !this.submenuActive;
+  toggleMovimientos() {
+    this.movimientosActive = !this.movimientosActive;
+    // Opcional: cerrar el otro
+    this.nominaActive = false;
+  }
+
+  toggleNomina() {
+    this.nominaActive = !this.nominaActive;
+    // Opcional: cerrar el otro
+    this.movimientosActive = false;
   }
   
     logout() {
