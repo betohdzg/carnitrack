@@ -19,7 +19,7 @@ export class MiCuentaComponent {
   nominaActive: boolean = false;
   isGerente: boolean = false;
   constructor(private router: Router, private authService: AuthService) {
-    this.isGerente = this.authService.isGerente();
+    this.isGerente = this.authService.esGerente();
   }
   toggleMenu() {
     this.menuActive = !this.menuActive;

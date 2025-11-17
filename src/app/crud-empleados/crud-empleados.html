@@ -59,88 +59,90 @@
 
   <section class="formulario-empleado">
     <div class="container">
-      <h2>Agregar Nuevo Trabajador</h2>
+      <h2>{{ esEdicion ? 'Editar Empleado' : 'Agregar Nuevo Trabajador' }}</h2>
 
-      <form (ngSubmit)="guardarEmpleado($event)">
-        <!-- Nombre -->
-        <div class="form-group">
-          <label for="nombre">Nombre Completo</label>
-          <input
-            type="text"
-            id="nombre"
-            [(ngModel)]="empleado.nombre"
-            name="nombre"
-            placeholder="Ej: Juan Pérez"
-            required
-          >
-        </div>
+<form (ngSubmit)="guardarEmpleado($event)">
+  <!-- Nombre -->
+  <div class="form-group">
+    <label for="nombre">Nombre Completo</label>
+    <input 
+      type="text" 
+      [(ngModel)]="empleado.nom_trb" 
+      name="nom_trb" 
+      placeholder="Ej: Juan Pérez"
+      required
+    >
+  </div>
 
-        <!-- Puesto y Salario -->
-        <div class="form-row">
-          <div class="form-group">
-            <label for="puesto">Puesto</label>
-            <input
-              type="text"
-              id="puesto"
-              [(ngModel)]="empleado.puesto"
-              name="puesto"
-              placeholder="Ej: Cajero, Carnicero"
-              required
-            >
+  <!-- Puesto y Salario -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="puesto">Puesto</label>
+      <input
+        type="text"  
+        [(ngModel)]="empleado.puesto" 
+        name="puesto"
+        placeholder="Ej: Cajero, Carnicero"
+        required
+      >
+    </div>
+    <div class="form-group">
+      <label for="salario">Salario Base</label>
+      <input
+        type="number"
+        step="0.01"
+        [(ngModel)]="empleado.sal_base" 
+        name="sal_base"
+        placeholder="Ej: 8500.00"
+        required
+      >
+    </div>
+  </div>
+
+  <!-- Usuario -->
+  <div class="form-group">
+    <label for="usuario">Usuario</label>
+    <input
+      type="text"
+      [(ngModel)]="empleado.user_trb" 
+      name="user_trb"
+      placeholder="Ej: juan123"
+      required
+    >
+  </div>
+
+  <!-- Contraseña -->
+  <div class="form-group">
+    <label for="password">
+      Contraseña 
+      <small *ngIf="esEdicion">(dejar en blanco para no cambiar)</small>
+    </label>
+    <input
+      type="password"
+      [(ngModel)]="empleado.psw_trb" 
+      name="psw_trb"
+      [placeholder]="esEdicion ? 'Mínimo 6 caracteres (opcional)' : 'Mínimo 6 caracteres'"
+      [minlength]="esEdicion ? 0 : 6"
+      [required]="!esEdicion"
+    >
+  </div>
+
+  <!-- Botones -->
+  <!-- === BOTONES SEPARADOS === -->
+        <div class="botones-formulario">
+          <!-- Guardar / Actualizar -->
+          <button type="submit" class="guardar-btn">
+            {{ esEdicion ? 'Actualizar' : 'Guardar' }}
+          </button>
+
+          <!-- Volver (solo en edición) -->
+          <div class="volver-btn" *ngIf="esEdicion">
+            <button type="button" (click)="volverALaLista()">
+              Volver a la lista
+            </button>
           </div>
-          <div class="form-group">
-            <label for="salario">Salario Base</label>
-            <input
-              type="number"
-              step="0.01"
-              id="salario"
-              [(ngModel)]="empleado.salario_base"
-              name="salario_base"
-              placeholder="Ej: 8500.00"
-              required
-            >
-          </div>
         </div>
-
-        <!-- Usuario -->
-        <div class="form-group">
-          <label for="usuario">Usuario</label>
-          <input
-            type="text"
-            id="usuario"
-            [(ngModel)]="empleado.usuario"
-            name="usuario"
-            placeholder="Ej: juan123"
-            required
-          >
-        </div>
-
-        <!-- Contraseña -->
-        <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input
-            type="password"
-            id="password"
-            [(ngModel)]="empleado.password"
-            name="password"
-            placeholder="Mínimo 6 caracteres"
-            minlength="6"
-            required
-          >
-        </div>
-
-        <!-- Rol -->
-        <div class="form-group">
-          <label for="rol">Rol</label>
-          <select [(ngModel)]="empleado.rol" name="rol" required>
-            <option value="empleado">Empleado</option>
-            <option value="gerente">Gerente</option>
-          </select>
-        </div>
-
-        <!-- Botón -->
-        <button type="submit" class="cta-button">Guardar Empleado</button>
-      </form>
+    </form>
     </div>
   </section>
 

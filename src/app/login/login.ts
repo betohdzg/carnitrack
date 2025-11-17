@@ -1,34 +1,50 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth';
+import { LoginService } from '../services/login'; // ← Asegúrate del path
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule], // ← FormsModule necesario
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
-  currentRole: string = 'empleados';
+  currentRole: 'gerente' | 'empleado' = 'empleado';
   usuario: string = '';
   password: string = '';
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private loginService: LoginService
+  ) {}
 
-  selectRole(role: string) {
+  selectRole(role: 'gerente' | 'empleado') {
     this.currentRole = role;
   }
 
-  login() {
-    if (!this.usuario || !this.password) {
-      alert('Por favor, completa todos los campos');
-      return;
-    }
-    this.authService.setRole(this.currentRole);
-    alert(`Iniciando sesión como ${this.currentRole}...`);
-    this.router.navigate(['/dashboard']);
+hacerLogin() {
+  this.loginService.login(this.usuario, this.password, this.currentRole).subscribe({
+    next: () => {
+      this.router.navigate(['/dashboard']); // REDIRIGE
+    },
+    error: (err) => alert(err.error?.mensaje || 'Error')
+  });
+
+
+    console.log('Intentando login...', { usuario: this.usuario, rol: this.currentRole });
+
+    this.loginService.login(this.usuario, this.password, this.currentRole).subscribe({
+      next: (res) => {
+        alert(`¡Bienvenido, ${res.usuario.nombre}!`);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        const msg = err.error?.mensaje || 'Error en login';
+        alert(msg);
+      }
+    });
   }
 }

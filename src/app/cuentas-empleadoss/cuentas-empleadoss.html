@@ -4,7 +4,6 @@
 </div>
 
 <!-- Menú lateral -->
-<!-- Menú lateral -->
 <aside class="menu-lateral" [class.active]="menuActive">
     <div class="menu-header">
         <h2>Menú</h2>
@@ -41,54 +40,68 @@
             <h1>CarneTrack</h1>
         </div>
     </header>
-<div class="container"*ngIf="filteredEmpleados.length > 0">
-      <h2>Cuentas de Empleados</h2>
-    <div class="search-bar">
-      <input type="text" placeholder="Buscar Empleados..."[(ngModel)]="searchQuery"(input)="filterTable()">
-      <button (click)="filterTable()"><i class="fas fa-search"></i> Buscar</button>
-      
-      <button class="add-button" routerLink="/crud-empleados" ><i class="fas fa-plus"></i> Agregar Empleado</button>
-        
-    </div>
-      <!-- Tabla -->
-      
-    <div class="tabla-empleados">
-      <table id="tabla-empleados">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Puesto</th>
-            <th>Salario Base</th>
-            <th>Usuario</th>
-            <th>Contraseña</th>
-            <th>Acciones</th>
+<!-- CORRIGE: *ngIf y (input) -->
+<div class="container" >
+  <h2>Cuentas de Empleados</h2>
 
-          </tr>
-         </thead>
-            
-         <tbody>
-          <tr *ngFor="let emp of filteredEmpleados">
-            <td>{{ emp.id_trb }}</td>
-            <td>{{ emp.nom_trb }}</td>
-            <td>{{ emp.puesto }}</td>
-            <td>${{ emp.sal_base | number:'1.2-2' }}</td>
-            <td>{{ emp.user_trb }}</td>
-            <td>•••••••</td>
-            <td class="acciones">
-              <button class="action-button edit-button" (click)="editarEmpleado(emp.id)">
-                <i class="fas fa-edit"></i> Editar
-              </button>
-              <button class="action-button delete-button" (click)="eliminarEmpleado(emp.id)">
-                <i class="fas fa-trash"></i> Borrar
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="search-bar">
+    <input 
+      type="text" 
+      placeholder="Buscar Empleados..." 
+      [(ngModel)]="searchQuery" 
+      (input)="filterTable()"
+    >
+    <button (click)="filterTable()"><i class="fas fa-search"></i> Buscar</button>
+    <button class="add-button" routerLink="/crud-empleados">
+      <i class="fas fa-plus"></i> Agregar Empleado
+    </button>
+  </div>
 
-   </div>
+  <div class="tabla-empleados">
+    <table id="tabla-empleados">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Puesto</th>
+          <th>Salario Base</th>
+          <th>Usuario</th>
+          <th>Contraseña</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of filteredEmpleados">
+          <td>{{ emp.id_trb }}</td>
+          <td>{{ emp.nom_trb }}</td>
+          <td>{{ emp.puesto }}</td>
+          <td>{{ emp.sal_base }}</td>
+          <td>{{ emp.user_trb }}</td>
+          <td>•••••••</td>
+          <td class="acciones">
+            <button class="action-button edit-button" (click)="editarEmpleado(emp.id_trb)">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button class="action-button delete-button" (click)="eliminarEmpleado(emp.id_trb)">
+              <i class="fas fa-trash"></i> Borrar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MOSTRAR SI NO HAY DATOS -->
+<div class="container" *ngIf="filteredEmpleados.length === 0">
+  <p>No se encontraron empleados.</p>
+</div>
+    <!-- LOADER: mientras carga -->
+    <div class="loading" *ngIf="rows.length === 0">
+      <p><i class="fas fa-spinner fa-spin"></i> Cargando productos...</p>
+</div>
+  
+   
    <footer>
         <div class="foteer">
             <p>&copy; 2025/6 CarneTrack. Todos los derechos reservados.</p>

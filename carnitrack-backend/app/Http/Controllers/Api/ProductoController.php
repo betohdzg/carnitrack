@@ -29,35 +29,40 @@ class ProductoController extends Controller
     }
 
     public function show($id)
-    {
-        $producto = Producto::find($id);
-        return $producto ? response()->json($producto) : response()->json(['error' => 'No encontrado'], 404);
-    }
-
+{
+    $producto = Producto::find($id); // ← find() SÍ funciona si el modelo está bien
+    return $producto 
+        ? response()->json($producto) 
+        : response()->json(['error' => 'No encontrado'], 404);
+}
+        //EDITAR PRODUCTO 
     public function update(Request $request, $id)
-    {
-        $producto = Producto::find($id);
-        if (!$producto) return response()->json(['error' => 'No encontrado'], 404);
-
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'tipo_carne' => 'required|in:res,pollo,pescado',
-            'precio_kg' => 'required|numeric|min:0',
-            'stock_kg' => 'required|numeric|min:0',
-            'fecha_entrada' => 'required|date',
-            'fecha_caducidad' => 'required|date|after:fecha_entrada',
-        ]);
-
-        $producto->update($request->all());
-        return response()->json($producto);
+{
+    $producto = Producto::find($id); // ← Usa find(), que respeta $primaryKey
+    if (!$producto) {
+        return response()->json(['error' => 'Producto no encontrado'], 404);
     }
 
-    public function destroy($id)
-    {
-        $producto = Producto::find($id);
-        if (!$producto) return response()->json(['error' => 'No encontrado'], 404);
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'tipo_carne' => 'required|in:res,pollo,pescado',
+        'precio_kg' => 'required|numeric|min:0',
+        'stock_kg' => 'required|numeric|min:0',
+        'fecha_entrada' => 'required|date',
+        'fecha_caducidad' => 'required|date|after:fecha_entrada',
+    ]);
 
-        $producto->delete();
-        return response()->json(['mensaje' => 'Eliminado']);
+    $producto->update($request->all());
+    return response()->json($producto);
+}
+
+public function destroy($id)
+{
+    $producto = Producto::find($id);
+    if (!$producto) {
+        return response()->json(['error' => 'No encontrado'], 404);
     }
+    $producto->delete();
+    return response()->json(['mensaje' => 'Eliminado']);
+}
 }

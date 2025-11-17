@@ -24,7 +24,7 @@ export class VerProductosEmpComponent implements OnInit {
   searchQuery: string = '';
 
   constructor(private router: Router, private authService: AuthService) {
-    this.isGerente = this.authService.isGerente();
+    this.isGerente = this.authService.esGerente();
   }
 
   ngOnInit() {
@@ -63,7 +63,5 @@ export class VerProductosEmpComponent implements OnInit {
     );
   }
 
-  agregarProducto() {
-    alert('Simulando agregar producto...');
-  }
+ 
 }

@@ -46,39 +46,83 @@
 </aside>
 
 <!-- Contenido principal con header -->
+<!-- ... Menú igual ... -->
+
 <main class="contenido-principal">
-    <header>
-        <div class="titulo">
-            <h1>CarneTrack</h1>
+  <header><div class="titulo"><h1>CarneTrack</h1></div></header>
+
+  <!-- ... código del menú igual ... -->
+
+<section class="formulario-producto">
+  <div class="container">
+    <h2>Salida de Producto</h2>
+    <form (ngSubmit)="confirmarVenta()">
+      <div class="form-group buscar_producto">
+        <label>Producto (ID o nombre):</label>
+        <input 
+          type="text" 
+          [(ngModel)]="busqueda" 
+          (input)="onBusqueda()" 
+          name="busqueda"
+          autocomplete="off"
+          placeholder="Ej: Res o CAR-RES-001"
+        >
+        <div class="sugerencias" *ngIf="sugerencias.length > 0">
+          <div class="sugerencia" *ngFor="let p of sugerencias" (click)="seleccionarProducto(p)">
+            <strong>{{ p.nombre }}</strong>  <!-- ← CAMBIADO: p.nombre -->
+            <small>ID: {{ p.id }} - ${{ p.precio_kg }} /kg</small>  <!-- ← CAMBIADO: p.id y p.precio_kg -->
+          </div>
         </div>
-    </header>
-    <section class="formulario-producto">
-        <div class="container">
-            <h2>Salida de Producto</h2>
-            <form>
-                <!-- Campo: Buscar Producto -->
-                <div class="form-group buscar_producto">
-                    <label for="buscar_producto">Ingresa el ID o nombre del producto:</label>
-                    <input type="text" id="buscar_producto" placeholder="Ej: Res o 123">
-                </div>
+      </div>
 
-                <!-- Campo: Cantidad (en kilos) -->
-                <div class="form-group cantidad">
-                    <label for="cantidad">Cantidad (kg):</label>
-                    <input type="number" id="cantidad" min="0.1" step="0.1" required>
-                </div>
+      <div class="form-group cantidad">
+        <label>Cantidad (kg):</label>
+        <input 
+          type="number" 
+          [(ngModel)]="cantidad" 
+          (input)="onCantidad()" 
+          min="0.01" 
+          step="0.01" 
+          name="cantidad"
+          required
+        >
+      </div>
 
-                <!-- Campo: Precio Total -->
-                <div class="form-group precio_total">
-                    <label for="precio_total">Precio Total:</label>
-                    <input type="text" id="precio_total" readonly>
-                </div>
+      <div class="form-group precio_total">
+        <label>Precio Total:</label>
+        <input type="text" [value]="precioTotal" readonly>
+      </div>
 
-                <!-- Botón de Confirmar Venta -->
-                <button type="button" class="cta-button">Confirmar Venta</button>
-            </form>
-        </div>
-    </section>
+      <button type="submit" class="cta-button">Confirmar Venta</button>
+    </form>
+  </div>
+</section>
+
+<!-- ... resto del código igual ... -->
+
+<!-- MODAL ÉXITO -->
+<div #successModal id="successModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal('success')">×</span>
+    <div class="modal-icon text-success"><i class="fas fa-check-circle"></i></div>
+    <h3>¡Venta Exitosa!</h3>
+    <p #successMessage></p>
+    <button class="cta-button" (click)="cerrarModal('success')">Aceptar</button>
+  </div>
+</div>
+
+<!-- MODAL ADVERTENCIA -->
+<div #warningModal id="warningModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal('warning')">×</span>
+    <div class="modal-icon text-warning"><i class="fas fa-exclamation-circle"></i></div>
+    <h3>Advertencia</h3>
+    <p #warningMessage></p>
+    <button class="cta-button" (click)="cerrarModal('warning')">Aceptar</button>
+  </div>
+</div>
+
+
  <footer>
         <div class="container">
             <p>&copy; 2025/6 CarneTrack. Todos los derechos reservados.</p>

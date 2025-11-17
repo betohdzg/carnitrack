@@ -59,22 +59,51 @@
     margin-top: 5px;
     display: block;
 }
-
-/* Estilos para el botón de guardar */
-.cta-button {
-    background-color: #941c2fff;
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
-    width: 100%;
-    transition: background-color 0.3s ease;
+/* Contenedor de botones */
+.botones-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* ← ESPACIO ENTRE BOTONES */
+  margin-top: 24px;
 }
 
-.cta-button:hover {
-    background-color: #d12e4a;
+/* Botón Guardar/Actualizar */
+.guardar-btn {
+  background-color: #941c2fff;
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.guardar-btn:hover {
+  background-color: #d12e4a;
+}
+
+/* Botón Volver */
+.volver-btn {
+  width: 100%;
+}
+
+.volver-btn button {
+  background: #6c757d;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.volver-btn button:hover {
+  background: #5a6268;
 }
 
 /* Estilos del modal */

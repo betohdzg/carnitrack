@@ -64,7 +64,7 @@ export class CalcularNominaComponent implements AfterViewInit {
     private router: Router,
     private authService: AuthService
   ) {
-    this.isGerente = this.authService.isGerente();
+    this.isGerente = this.authService.esGerente();
     this.generarIdNomina();
   }
 

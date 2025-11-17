@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth';
@@ -10,15 +10,14 @@ import { AuthService } from '../auth';
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
-export class DashboardComponent {
-  menuActive: boolean = false;
-  movimientosActive: boolean = false;
-  nominaActive: boolean = false; 
+export class DashboardComponent implements OnInit {
+  menuActive = false;
+  movimientosActive = false;
+  nominaActive = false; 
   isGerente: boolean = false;
   productos: any[] = []; // Ajusta según tu servicio de datos
 
   constructor(private router: Router, private authService: AuthService) {
-    this.isGerente = this.authService.isGerente();
     // Simulación de datos, reemplaza con tu servicio
     this.productos = [
       { nombre_producto: 'Producto 1', precio: 10.50, cantidad: 20, foto_url: 'url1' },
@@ -27,25 +26,16 @@ export class DashboardComponent {
     ];
   }
 
-  toggleMenu() {
-    this.menuActive = !this.menuActive;
+ngOnInit(): void {
+    this.isGerente = this.authService.esGerente(); // AHORA SÍ FUNCIONA
   }
 
-  toggleMovimientos() {
-    this.movimientosActive = !this.movimientosActive;
-    // Opcional: cerrar el otro
-    this.nominaActive = false;
-  }
-
-  toggleNomina() {
-    this.nominaActive = !this.nominaActive;
-    // Opcional: cerrar el otro
-    this.movimientosActive = false;
-  }
+  toggleMenu() { this.menuActive = !this.menuActive; }
+  toggleMovimientos() { this.movimientosActive = !this.movimientosActive; this.nominaActive = false; }
+  toggleNomina() { this.nominaActive = !this.nominaActive; this.movimientosActive = false; }
 
   logout() {
     this.authService.logout();
-    alert('Cerrando sesión...');
     this.router.navigate(['/login']);
   }
 

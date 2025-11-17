@@ -34,66 +34,93 @@
 
 <!-- Contenido principal con header -->
 <main class="contenido-principal">
-    <header>
-        <div class="titulo">
-            <h1>CarneTrack</h1>
-        </div>
-    </header>
-    <div class="container" *ngIf="filteredRows.length > 0">
-        <h2>Inventario de Carnes</h2>
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar por tipo, nombre o estado..." [(ngModel)]="searchQuery" (input)="filterTable()">
-            <button (click)="filterTable()"><i class="fas fa-search"></i> Buscar</button>
-      <button class="add-button" routerLink="/entrada-productos" ><i class="fas fa-plus"></i> Agregar Producto</button>
-        </div>
-        <div class="tabla-productos">
-            <table id="tabla-productos">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tipo de Carne</th>
-                        <th>Nombre</th>
-                        <th>Venta por kg</th>
-                        <th>Precio por kg</th>
-                        <th>Stock</th>
-                        <th>Estado</th>
-                        <th>Fecha de Entrada</th>
-                        <th>Fecha de Caducidad</th>
-                        <th>Acciones</th> <!-- Nueva columna para botones -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let row of filteredRows">
-                        <td>{{ row.id }}</td>
-                        <td>{{ row.tipo }}</td>
-                        <td>{{ row.nombre }}</td>
-                        <td>{{ row.venta }}</td>
-                        <td>{{ row.precio }}</td>
-                        <td>{{ row.stock }}</td>
-                        <td class="status-available">{{ row.estado }}</td>
-                        <td>{{ row.entrada }}</td>
-                        <td>{{ row.caducidad }}</td>
-                        <td>
-                            <button class="action-button edit-button" (click)="editarProducto(row.id)">
-                                <i class="fas fa-edit"></i> Editar
-                            </button>
-                            <button class="action-button delete-button" (click)="borrarProducto(row.id)">
-                                <i class="fas fa-trash"></i> Borrar
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+  <header>
+    <div class="titulo">
+      <h1>CarneTrack</h1>
     </div>
-    <footer>
-        <div class="foteer">
-            <p>&copy; 2025/6 CarneTrack. Todos los derechos reservados.</p>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-    </footer>
+  </header>
+
+  <!-- CONTENEDOR SIEMPRE VISIBLE -->
+  <div class="container">
+    <h2>Inventario de Carnes</h2>
+
+    <div class="search-bar">
+      <input 
+        type="text" 
+        placeholder="Buscar por tipo, nombre o estado..." 
+        [(ngModel)]="searchQuery" 
+        (input)="filterTable()"
+      >
+      <button (click)="filterTable()">
+        <i class="fas fa-search"></i> Buscar
+      </button>
+      <button class="add-button" routerLink="/entrada-productos">
+        <i class="fas fa-plus"></i> Agregar Producto
+      </button>
+    </div>
+
+    <!-- TABLA: solo si hay datos filtrados -->
+    <div class="tabla-productos" *ngIf="filteredRows.length > 0">
+      <table id="tabla-productos">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo de Carne</th>
+            <th>Nombre</th>
+            <th>Venta por kg</th>
+            <th>Precio por kg</th>
+            <th>Stock</th>
+            <th>Estado</th>
+            <th>Fecha de Entrada</th>
+            <th>Fecha de Caducidad</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of filteredRows">
+            <td>{{ row.id }}</td>
+            <td>{{ row.tipo }}</td>
+            <td>{{ row.nombre }}</td>
+            <td>Sí</td>
+            <td>{{ row.precio }}</td>
+            <td>{{ row.stock }}</td>
+            <td [class]="'status-' + (row.estado === 'Disponible' ? 'available' : 'warning')">
+              {{ row.estado }}
+            </td>
+            <td>{{ row.entrada }}</td>
+            <td>{{ row.caducidad }}</td>
+            <td class="actions">
+              <button class="action-button edit-button" (click)="editarProducto(row.id)">
+                <i class="fas fa-edit"></i> Editar
+              </button>
+              <button class="action-button delete-button" (click)="borrarProducto(row.id)">
+                <i class="fas fa-trash"></i> Borrar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- MENSAJE: sin resultados -->
+    <div class="no-data" *ngIf="filteredRows.length === 0 && rows.length > 0">
+      <p>No se encontraron productos con el filtro aplicado.</p>
+    </div>
+
+    <!-- LOADER: mientras carga -->
+    <div class="loading" *ngIf="rows.length === 0">
+      <p><i class="fas fa-spinner fa-spin"></i> Cargando productos...</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foteer">
+      <p>&copy; 2025/6 CarneTrack. Todos los derechos reservados.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
 </main>

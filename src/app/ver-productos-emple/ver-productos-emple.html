@@ -51,7 +51,7 @@
         <div class="search-bar">
             <input type="text" placeholder="Buscar por tipo, nombre o estado..." [(ngModel)]="searchQuery" (input)="filterTable()">
             <button (click)="filterTable()"><i class="fas fa-search"></i> Buscar</button>
-            <button class="add-button" (click)="agregarProducto()"><i class="fas fa-plus"></i> Agregar Producto</button>
+            <button class="add-button" routerLink="/entrada-productos"><i class="fas fa-plus"></i> Agregar Producto</button>
         </div>
 <div class="tabla-productos">
     <table id="tabla-productos">

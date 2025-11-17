@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-
+import { LoginService } from '../app/services/login';
 @Injectable({
   providedIn: 'root'  // Disponible en toda la app
 })
 export class AuthService {
+  constructor(private loginService: LoginService) {}
   private currentRole: string | null = null;  // Almacena el rol ('gerente' o 'empleados')
 
   setRole(role: string) {
@@ -18,8 +19,8 @@ export class AuthService {
     return this.currentRole;
   }
 
-  isGerente(): boolean {
-    return this.getRole() === 'gerente';
+esGerente(): boolean {
+    return this.loginService.esGerente(); // DELEGAR
   }
 
   logout() {
