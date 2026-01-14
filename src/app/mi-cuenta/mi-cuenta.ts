@@ -15,17 +15,26 @@ import { AuthService } from '../auth';
 export class MiCuentaComponent {
   showPassword = false;
   menuActive: boolean = false;
-  submenuActive: boolean = false;
+  movimientosActive: boolean = false;
+  nominaActive: boolean = false;
   isGerente: boolean = false;
   constructor(private router: Router, private authService: AuthService) {
-    this.isGerente = this.authService.isGerente();
+    this.isGerente = this.authService.esGerente();
   }
   toggleMenu() {
     this.menuActive = !this.menuActive;
   }
 
-  toggleSubmenu() {
-    this.submenuActive = !this.submenuActive;
+  toggleMovimientos() {
+    this.movimientosActive = !this.movimientosActive;
+    // Opcional: cerrar el otro
+    this.nominaActive = false;
+  }
+
+  toggleNomina() {
+    this.nominaActive = !this.nominaActive;
+    // Opcional: cerrar el otro
+    this.movimientosActive = false;
   }
   
   // Simulación de usuario (luego vendrá del servicio/auth)

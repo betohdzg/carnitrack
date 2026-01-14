@@ -12,8 +12,8 @@
         <li><a routerLink="/dashboard"><i class="fas fa-home"></i> Inicio</a></li>
         <li><a routerLink="/ver-productos-emple"><i class="fas fa-eye"></i> Ver Productos</a></li>
         <li>
-            <a (click)="toggleSubmenu()" id="movimientos"><i class="fas fa-exchange-alt"></i> Movimientos</a>
-            <ul class="submenu" [class.active]="submenuActive">
+            <a (click)="toggleMovimientos()" id="movimientos"><i class="fas fa-exchange-alt"></i> Movimientos</a>
+            <ul class="submenu" [class.active]="movimientosActive">
                 <li><a routerLink="/entrada-productos"><i class="fas fa-plus"></i> Entrada</a></li>
                 <li><a routerLink="/salida-producto"><i class="fas fa-minus"></i> Salida</a></li>
             </ul>
@@ -28,8 +28,8 @@
         <li><a routerLink="/dashboard"><i class="fas fa-home"></i> Inicio</a></li>
         <li><a routerLink="/ver-productos-emple"><i class="fas fa-eye"></i> Ver Productos</a></li>
         <li>
-            <a (click)="toggleSubmenu()" id="movimientos"><i class="fas fa-exchange-alt"></i> Movimientos</a>
-            <ul class="submenu" [class.active]="submenuActive">
+            <a (click)="toggleNomina()" id="movimientos"><i class="fas fa-exchange-alt"></i> Movimientos</a>
+            <ul class="submenu" [class.active]="nominaActive">
                 <li><a routerLink="/entrada-productos"><i class="fas fa-plus"></i> Entrada</a></li>
                 <li><a routerLink="/salida-producto"><i class="fas fa-minus"></i> Salida</a></li>
             </ul>
@@ -51,7 +51,7 @@
         <div class="search-bar">
             <input type="text" placeholder="Buscar por tipo, nombre o estado..." [(ngModel)]="searchQuery" (input)="filterTable()">
             <button (click)="filterTable()"><i class="fas fa-search"></i> Buscar</button>
-            <button class="add-button" (click)="agregarProducto()"><i class="fas fa-plus"></i> Agregar Producto</button>
+            <button class="add-button" routerLink="/entrada-productos"><i class="fas fa-plus"></i> Agregar Producto</button>
         </div>
 <div class="tabla-productos">
     <table id="tabla-productos">

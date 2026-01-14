@@ -9,6 +9,8 @@
     margin: 20px auto;
     font-family: 'Poppins', sans-serif;
     backdrop-filter: blur(10px);
+    min-height: 500px; /* ¡ESTO ES CLAVE! */
+    z-index: 1;
 }
 
 /* Título */
@@ -81,8 +83,8 @@ h2 {
 }
 
 #tabla-productos {
-    width: 100%;
-    border-collapse: collapse;
+width: 100% !important;    
+border-collapse: collapse;
     min-width: 900px; /* Aumentado para incluir la nueva columna */
 }
 
@@ -212,6 +214,28 @@ h2 {
     }
 }
 
+
+/* Mensaje sin datos */
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 18px;
+}
+
+/* Loader */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #941c2fff;
+  font-size: 18px;
+}
+
+.loading i {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
 /* Estilos del footer */
 footer {
     color: #fff;
@@ -249,7 +273,7 @@ footer p {
     cursor: pointer;
     z-index: 1001;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 50%;
 }
 
 /* Menú lateral */
@@ -260,7 +284,6 @@ footer p {
     top: 0;
     left: -250px;
     padding: 20px;
-    box-shadow: none;
     transition: left 0.3s ease;
     z-index: 1000;
 }
@@ -345,11 +368,26 @@ header h1 {
 
 /* Contenido principal */
 .contenido-principal {
-    margin-left: 0;
+    flex: 1;
     padding: 20px;
-    transition: margin-left 0.3s ease;
+    padding-left: 70px; /* Espacio fijo para el botón menú */
+    transition: padding-left 0.3s ease;
 }
 
 .menu-lateral.active ~ .contenido-principal {
-    margin-left: 250px;
+    padding-left: 270px; /* 250px menú + 20px padding */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #a3bffa; /* Tu fondo azul */
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

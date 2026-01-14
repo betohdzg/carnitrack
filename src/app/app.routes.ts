@@ -8,6 +8,9 @@ import { VerProductosGerenComponent } from './ver-producto-geren/ver-producto-ge
 import { MiCuentaComponent } from './mi-cuenta/mi-cuenta';
 import { EntradaComponent } from './entrada-productos/entrada-productos';
 import { CuentasEmpleadosComponent } from './cuentas-empleadoss/cuentas-empleadoss';
+import { CrudEmpleadosComponent } from './crud-empleados/crud-empleados';
+import { BonosExtrasNomComponent } from './bono-extras-nom/bono-extras-nom';
+import { CalcularNominaComponent } from './calcular-nomina/calcular-nomina';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirección a login como primera prioridad
@@ -20,5 +23,8 @@ export const routes: Routes = [
   { path: 'entrada-productos', component: EntradaComponent },
   { path: 'mi-cuenta', component: MiCuentaComponent },
   { path: 'cuentas-empleadoss', component: CuentasEmpleadosComponent },
+  { path: 'crud-empleados', component: CrudEmpleadosComponent},
+  { path: 'bono-extras-nom', component: BonosExtrasNomComponent},
+  { path: 'calcular-nomina', component: CalcularNominaComponent},
   { path: '**', redirectTo: '/login' } // Ruta comodín para errores
 ];

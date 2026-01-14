@@ -202,6 +202,27 @@ tr:hover {
     }
 }
 
+/* Mensaje sin datos */
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 18px;
+}
+
+/* Loader */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #941c2fff;
+  font-size: 18px;
+}
+
+.loading i {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
 /* Estilos del footer */
 footer {
     color: #fff;

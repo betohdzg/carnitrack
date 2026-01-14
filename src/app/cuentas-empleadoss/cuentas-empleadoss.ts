@@ -1,9 +1,20 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../auth';
+import { TrabajadorService, Trabajador } from '../services/trabajador';
+import { ChangeDetectorRef } from '@angular/core';
 
+interface TrabajadorTabla {
+  id_trb: number;
+  nom_trb: string;
+  puesto: string;
+  sal_base: string;
+  user_trb: string;
+   rol?: 'gerente' | 'empleado'; // opcional, no se guarda en BD
+
+}
 
 @Component({
   selector: 'app-cuentas-empleados',
@@ -12,55 +23,92 @@ import { AuthService } from '../auth';
   templateUrl: './cuentas-empleadoss.html',
   styleUrls: ['./cuentas-empleadoss.css']
 })
-export class CuentasEmpleadosComponent  {
- menuActive: boolean = false;
-  submenuActive: boolean = false;
-  isGerente: boolean = false;
-  rows: any[] = [
-    { id_trb: 1, nom_trb: 'Juan Pérez', puesto: 'Cajero', sal_base: 8500.00, user_trb: 'juan123', psw_trb: 'pass123' },
-    { id_trb: 2, nom_trb: 'María López', puesto: 'Carnicero', sal_base: 9500.00, user_trb: 'maria456', psw_trb: 'pass456' },
-    { id_trb: 3, nom_trb: 'Pedro Gómez', puesto: 'Limpieza', sal_base: 7000.00, user_trb: 'pedro789', psw_trb: 'pass789' }
-  ];
-  filteredEmpleados: any[] = [];
-  searchQuery: string = '';
- constructor(private router: Router, private authService: AuthService) {
-    this.isGerente = this.authService.isGerente();
+export class CuentasEmpleadosComponent implements OnInit {
+  menuActive = false;
+  movimientosActive = false;
+  nominaActive = false;
+  isGerente = false;
+
+  rows: TrabajadorTabla[] = [];
+  filteredEmpleados: TrabajadorTabla[] = [];
+  searchQuery = '';
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private trabajadorService: TrabajadorService,
+    private cdr: ChangeDetectorRef // ← INYECTAR
+
+  ) {}
+
+  ngOnInit(): void {
+    this.isGerente = this.authService.esGerente();
+    this.cargarTrabajadores();
   }
 
-  ngOnInit() {
-    this.filteredEmpleados = [...this.rows];
-  }
+cargarTrabajadores() {
+  this.trabajadorService.getAll().subscribe({
+    next: (data: Trabajador[]) => {
+      this.rows = data.map(t => ({
+        id_trb: t.id_trb ?? 0,  // ← CONVIERTE undefined → 0
+        nom_trb: t.nom_trb || 'Sin nombre',
+        puesto: t.puesto || 'Sin puesto',
+        sal_base: `$${Number(t.sal_base).toFixed(2)}`,
+        user_trb: t.user_trb || 'Sin usuario'
+      }));
+      this.filteredEmpleados = [...this.rows];
+      this.cdr.detectChanges();
+    },
+    error: (err) => {
+      console.error('Error al cargar trabajadores:', err);
+      alert('Error de conexión con el servidor');
+      // Datos de respaldo
+      this.rows = [
+        { id_trb: 0, nom_trb: 'Juan Pérez', puesto: 'Cajero', sal_base: '$8,500.00', user_trb: 'juan123' }
+      ];
+      this.filteredEmpleados = [...this.rows];
+      this.cdr.detectChanges();
 
-  toggleMenu() {
-    this.menuActive = !this.menuActive;
-  }
+    }
+  });
+}
 
-  toggleSubmenu() {
-    this.submenuActive = !this.submenuActive;
-  }
-
-
-  editarEmpleado(id: number) {
-    // Placeholder para editar (a implementar con navegación o formulario)
-    alert(`Editar producto con ID: ${id}`);
-  }
-
-  eliminarEmpleado(id: number) {
-    // Placeholder para borrar (a implementar con confirmación y backend)
-    alert(`Borrar producto con ID: ${id}`);
-  }
   filterTable() {
-    const filter = this.searchQuery.toLowerCase();
-    this.filteredEmpleados = this.rows.filter(emp =>
-      Object.values(emp).some(value => {
-        if (value === null || value === undefined) return false;
-        return value.toString().toLowerCase().includes(filter);
-      })
+    const filter = this.searchQuery.toLowerCase().trim();
+    if (!filter) {
+      this.filteredEmpleados = [...this.rows];
+      return;
+    }
+    this.filteredEmpleados = this.rows.filter(row =>
+      Object.values(row).some(value =>
+        value?.toString().toLowerCase().includes(filter)
+      )
     );
   }
-  logout() {
-    this.authService.logout();
-    alert('Cerrando sesión...');
-    this.router.navigate(['/login']);
+
+  editarEmpleado(id: number) {
+    this.router.navigate(['/crud-empleados'], { queryParams: { edit: id } });
   }
+
+eliminarEmpleado(id: number) {
+  if (confirm('¿Estás seguro de eliminar este empleado?')) {
+    this.trabajadorService.delete(id).subscribe({
+      next: () => {
+        this.rows = this.rows.filter(t => t.id_trb !== id);
+        this.filteredEmpleados = this.filteredEmpleados.filter(t => t.id_trb !== id);
+        alert('Empleado eliminado');
+      },
+      error: (err) => {
+        console.error('Error:', err);
+        alert('Error al eliminar');
+      }
+    });
+  }
+}
+
+  // MENÚ
+  toggleMenu() { this.menuActive = !this.menuActive; }
+  toggleMovimientos() { this.movimientosActive = !this.movimientosActive; this.nominaActive = false; }
+  toggleNomina() { this.nominaActive = !this.nominaActive; this.movimientosActive = false; }
+  logout() { this.authService.logout(); this.router.navigate(['/login']); }
 }

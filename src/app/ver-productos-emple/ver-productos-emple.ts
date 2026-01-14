@@ -13,7 +13,8 @@ import { Router,RouterLink } from '@angular/router';
 })
 export class VerProductosEmpComponent implements OnInit {
   menuActive: boolean = false;
-  submenuActive: boolean = false;
+  movimientosActive: boolean = false;
+  nominaActive: boolean = false; 
   isGerente: boolean = false;
   rows: any[] = [
     { id: 1, tipo: 'Res', nombre: 'Filete', venta: 'Sí', precio: '$12.50', stock: '100 kg', estado: 'Disponible', entrada: '15 Oct 2025', caducidad: '15 Nov 2025' },
@@ -23,7 +24,7 @@ export class VerProductosEmpComponent implements OnInit {
   searchQuery: string = '';
 
   constructor(private router: Router, private authService: AuthService) {
-    this.isGerente = this.authService.isGerente();
+    this.isGerente = this.authService.esGerente();
   }
 
   ngOnInit() {
@@ -34,8 +35,16 @@ export class VerProductosEmpComponent implements OnInit {
     this.menuActive = !this.menuActive;
   }
 
-  toggleSubmenu() {
-    this.submenuActive = !this.submenuActive;
+  toggleMovimientos() {
+    this.movimientosActive = !this.movimientosActive;
+    // Opcional: cerrar el otro
+    this.nominaActive = false;
+  }
+
+  toggleNomina() {
+    this.nominaActive = !this.nominaActive;
+    // Opcional: cerrar el otro
+    this.movimientosActive = false;
   }
 
   logout() {
@@ -54,7 +63,5 @@ export class VerProductosEmpComponent implements OnInit {
     );
   }
 
-  agregarProducto() {
-    alert('Simulando agregar producto...');
-  }
+ 
 }
